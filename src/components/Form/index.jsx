@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { View, TextInput, Switch, Button, Text, Keyboard } from "react-native";
+import {
+  View,
+  TextInput,
+  Switch,
+  Pressable,
+  Text,
+  Keyboard,
+} from "react-native";
 import styles from "./styles";
 
 function Form({ onAddTask }) {
@@ -36,18 +43,30 @@ function Form({ onAddTask }) {
         </View>
       )}
 
-      <TextInput
-        placeholder="Enter a task description"
-        maxLength={150}
-        onChangeText={handleDescriptionChange}
-        value={taskDescription}
-        style={styles.textInputContainer}
-      />
-      <View>
-        <Text>Completed:</Text>
-        <Switch value={taskDone} onValueChange={handleStatusChange} />
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <TextInput
+          placeholder="Enter a task description"
+          maxLength={150}
+          onChangeText={handleDescriptionChange}
+          value={taskDescription}
+          style={styles.textInputContainer}
+        />
+        <Switch
+          value={taskDone}
+          onValueChange={handleStatusChange}
+          style={{ marginLeft: "auto", marginRight: 20 }}
+        />
       </View>
-      <Button title="Add" onPress={handleAddPress} />
+      <Pressable onPress={handleAddPress} style={styles.addButton}>
+        <Text style={styles.addButtonText}>Add</Text>
+      </Pressable>
     </View>
   );
 }
