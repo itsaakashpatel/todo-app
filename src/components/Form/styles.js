@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 
 const styles = StyleSheet.create({
   container: {
@@ -7,8 +7,24 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   textInputContainer: {
-    margin: 10,
+    backgroundColor: "#fff",
+    marginVertical: 10,
+    marginHorizontal: 20,
     padding: 10,
+    // width: Dimensions.get("window").width - 120,
+    flex: 1,
+  },
+  addButton: {
+    backgroundColor: "#3b43d6",
+    padding: 10,
+    margin: 20,
+    color: "#fff",
+  },
+  addButtonText: {
+    textAlign: "center",
+    color: "#fff",
+    fontSize: 20,
+    fontWeight: "bold",
   },
 });
 
