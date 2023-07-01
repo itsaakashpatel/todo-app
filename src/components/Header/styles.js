@@ -3,8 +3,9 @@ import { baseTextStyle, headings, baseColors } from "../../styles/global";
 
 const styles = StyleSheet.create({
   container: {
-    alignSelf: "stretch",
-    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "space-between",
+    flexDirection: "row",
     borderBottomColor: baseColors.primary,
     borderBottomWidth: 3,
     padding: 10,
@@ -25,6 +26,7 @@ const styles = StyleSheet.create({
     color: baseColors.tertiary,
     fontSize: 12,
     textAlign: "right",
+    padding: 10,
   },
 });
 

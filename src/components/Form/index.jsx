@@ -9,8 +9,8 @@ import {
 } from "react-native";
 import styles from "./styles";
 
-function Form({ onAddTask }) {
-  const [taskDescription, setTaskDescription] = useState("");
+function Form({ onAddTask, navigation }) {
+  const [taskDescription, setTaskDescription] = useState(" ");
   const [taskDone, setTaskDone] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -29,6 +29,7 @@ function Form({ onAddTask }) {
       setTaskDescription("");
       setTaskDone(false);
       Keyboard.dismiss();
+      navigation.navigate("Tasks");
     } else {
       setErrorMessage("The description is required.");
     }
