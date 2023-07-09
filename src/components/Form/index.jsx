@@ -8,6 +8,9 @@ import {
   Keyboard,
 } from "react-native";
 import styles from "./styles";
+import database from "../../../firebaseConfig";
+import { ref, push, set } from "firebase/database";
+import showToast from "../../Utils/Toast";
 
 function Form({ onAddTask, navigation }) {
   const [taskDescription, setTaskDescription] = useState(" ");
@@ -24,26 +27,38 @@ function Form({ onAddTask, navigation }) {
 
   const handleAddPress = () => {
     if (taskDescription) {
-      onAddTask(taskDescription, taskDone);
-      setErrorMessage(null);
-      setTaskDescription("");
-      setTaskDone(false);
-      Keyboard.dismiss();
-      navigation.navigate("Tasks");
+      //make an api call to add the task
+      //if the api call is successful, then navigate to the tasks screen
+      //if the api call fails, then show an error message
+      addDataToDatabase(taskDescription, taskDone);
+      onAddTask();
     } else {
       setErrorMessage("The description is required.");
     }
   };
 
+  const addDataToDatabase = (taskDescription, taskDone) => {
+    const listRef = ref(database, "/tasks");
+    const pushRef = push(listRef);
+    const data = { description: taskDescription, done: taskDone };
+    set(pushRef, data)
+      .then(() => {
+        console.log("Task successfully added:", pushRef.key);
+        showToast("Task successfully added!");
+        setErrorMessage(null);
+        setTaskDescription("");
+        setTaskDone(false);
+        Keyboard.dismiss();
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+        setErrorMessage("An error occurred while adding the task.");
+      });
+  };
+
   return (
     <View style={styles.container}>
-      {errorMessage && (
-        <View>
-          <Text style={{ fontWeight: "bold" }}>Attention:</Text>
-          <Text style={{ color: "red" }}>{errorMessage}</Text>
-        </View>
-      )}
-
+      <Text style={styles.title}>Add a new task</Text>
       <View
         style={{
           display: "flex",
@@ -64,6 +79,12 @@ function Form({ onAddTask, navigation }) {
           onValueChange={handleStatusChange}
           style={{ marginLeft: "auto", marginRight: 20 }}
         />
+        {errorMessage && (
+          <View>
+            <Text style={{ fontWeight: "bold" }}>Attention:</Text>
+            <Text style={{ color: "red" }}>{errorMessage}</Text>
+          </View>
+        )}
       </View>
       <Pressable onPress={handleAddPress} style={styles.addButton}>
         <Text style={styles.addButtonText}>Add</Text>

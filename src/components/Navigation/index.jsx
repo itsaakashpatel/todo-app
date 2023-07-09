@@ -21,6 +21,7 @@ export default function Navigation({ children }) {
             // You can return any component that you like here!
             return <FontAwesome name={iconName} size={24} color="black" />;
           },
+          headerShown: false,
         })}
       >
         {children}

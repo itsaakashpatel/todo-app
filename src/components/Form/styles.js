@@ -6,6 +6,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#bcbcbc",
     padding: 10,
   },
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    textAlign: "center",
+    color: "#3b43d6",
+    padding: 10,
+  },
   textInputContainer: {
     backgroundColor: "#fff",
     marginVertical: 10,
