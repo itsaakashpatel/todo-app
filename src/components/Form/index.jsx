@@ -10,6 +10,7 @@ import {
 import styles from "./styles";
 import database from "../../../firebaseConfig";
 import { ref, push, set } from "firebase/database";
+import showToast from "../../Utils/Toast";
 
 function Form({ onAddTask, navigation }) {
   const [taskDescription, setTaskDescription] = useState(" ");
@@ -43,11 +44,11 @@ function Form({ onAddTask, navigation }) {
     set(pushRef, data)
       .then(() => {
         console.log("Task successfully added:", pushRef.key);
+        showToast("Task successfully added!");
         setErrorMessage(null);
         setTaskDescription("");
         setTaskDone(false);
         Keyboard.dismiss();
-        navigation.navigate("Tasks");
       })
       .catch((error) => {
         console.log("Error:", error);

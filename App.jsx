@@ -9,6 +9,9 @@ import Navigation from "./src/components/Navigation";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import database from "./firebaseConfig";
 import { ref, onValue, update, remove } from "firebase/database";
+import { RootSiblingParent } from "react-native-root-siblings";
+import showToast from "./src/Utils/Toast";
+
 const Tab = createBottomTabNavigator();
 
 const TASKS_LIST = [];
@@ -89,8 +92,9 @@ export default function App() {
 
     update(ref(database), updates)
       .then(() => {
-        console.log("User successfully updated!");
+        console.log("Task successfully updated!");
         setTasks(getTasks);
+        showToast("Task successfully updated!");
       })
       .catch((error) => {
         console.log("Error:", error);
@@ -118,27 +122,29 @@ export default function App() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <StatusBar style="auto" />
-      <Header />
-      {loading && <Text>Loading...</Text>}
-      {noDataFound && <Text>No data found</Text>}
-      {errorMsg && <Text>{errorMsg}</Text>}
-      <Navigation>
-        <Tab.Screen name={"Tasks"}>
-          {(props) => (
-            <Tasks
-              {...props}
-              tasks={tasks}
-              setTasks={setTasks}
-              updateTasks={updateTasks}
-              onTaskRemoval={onTaskRemoval}
-            />
-          )}
-        </Tab.Screen>
-        <Tab.Screen name={"Form"}>
-          {(props) => <Form {...props} onAddTask={handleAddTask} />}
-        </Tab.Screen>
-      </Navigation>
+      <RootSiblingParent>
+        <StatusBar style="auto" />
+        <Header />
+        {loading && <Text>Loading...</Text>}
+        {noDataFound && <Text>No data found</Text>}
+        {errorMsg && <Text>{errorMsg}</Text>}
+        <Navigation>
+          <Tab.Screen name={"Tasks"}>
+            {(props) => (
+              <Tasks
+                {...props}
+                tasks={tasks}
+                setTasks={setTasks}
+                updateTasks={updateTasks}
+                onTaskRemoval={onTaskRemoval}
+              />
+            )}
+          </Tab.Screen>
+          <Tab.Screen name={"Form"}>
+            {(props) => <Form {...props} onAddTask={handleAddTask} />}
+          </Tab.Screen>
+        </Navigation>
+      </RootSiblingParent>
     </SafeAreaView>
   );
 }
